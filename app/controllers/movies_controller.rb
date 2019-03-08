@@ -54,16 +54,9 @@ class MoviesController < ApplicationController
     redirect_to movie_path(@movie)
   end
 
-  def destroy
-    @movie = Movie.find(params[:id])
-    @movie.destroy
-    flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path
-  end
-  
-  def search_by_director
-     @movie = Movie.find params[:id]
-     movie_director = @movie.director
+  def find_movie_by_director
+    @movie = Movie.find params[:id]
+    movie_director = @movie.director
     if (movie_director.nil? || (movie_director == ""))
       flash[:notice] = "'#{@movie.title}' has no director info."
       redirect_to movies_path
@@ -72,9 +65,11 @@ class MoviesController < ApplicationController
     end
   end
 
-
-@movie = Movie.find_by(title: params[:title])
-
-end
+  def destroy
+    @movie = Movie.find(params[:id])
+    @movie.destroy
+    flash[:notice] = "Movie '#{@movie.title}' deleted."
+    redirect_to movies_path
+  end
 
 end
